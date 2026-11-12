@@ -1,9 +1,12 @@
 .masthead {
   padding: var(--gutter);
+  display: grid;
+  grid-template-columns: 6fr 2fr;
+  column-gap: var(--gutter);
 }
 
 .masthead__title svg {
-  width: 50%;
+  width: 100%;
   height: auto;
   overflow: visible;
 }
@@ -14,4 +17,26 @@
 
 .masthead .glyph__inline {
   stroke: var(--color-paper);
+}
+
+.masthead__roles {
+  container-type: size;
+}
+
+.roles {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 30cqb;
+  line-height: 1;
+}
+
+.roles li {
+  text-box: trim-both cap alphabetic;
 }
