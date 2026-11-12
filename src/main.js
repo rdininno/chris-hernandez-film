@@ -1,4 +1,9 @@
 import "./styles/base.css";
-import { gsap } from "gsap";
+import { runLoader } from "./intro/loader.js";
 
-console.log("GSAP", gsap.version);
+async function init() {
+  const loaderEl = await runLoader();
+  console.log("loader done", loaderEl);
+}
+
+init();
