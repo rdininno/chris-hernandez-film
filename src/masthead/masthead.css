@@ -1,0 +1,17 @@
+.masthead {
+  padding: var(--gutter);
+}
+
+.masthead__title svg {
+  width: 50%;
+  height: auto;
+  overflow: visible;
+}
+
+.masthead .glyph__body {
+  stroke: var(--color-ink);
+}
+
+.masthead .glyph__inline {
+  stroke: var(--color-paper);
+}

@@ -14,16 +14,19 @@
   --color-leader-base: #161616;
   --color-leader-sweep: #2a2a2a;
   --font-display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --color-paper: #f2efe9;
+  --color-ink: #0a0a0a;
+  --gutter: max(10px, calc(clamp(16px, 2.5vw, 40px) / 3));
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   min-height: 100svh;
-  background: var(--color-bg);
-  color: var(--color-fg);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -36,8 +39,11 @@ svg {
   max-width: 100%;
 }
 
-/* Temporary: a backdrop to see through the cutout. Replaced in Step 5. */
-#app {
-  min-height: 100svh;
-  background: linear-gradient(160deg, #1b2b4a, #b8743f 60%, #f1d7a2);
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

@@ -3,6 +3,9 @@ import "@fontsource/anton";
 import { runLoader } from "./intro/loader.js";
 import { playIntro } from "./intro/intro.js";
 import { loadGlyphs } from "./intro/glyphs.js";
+import { createMasthead } from "./masthead/masthead.js";
+
+const masthead = createMasthead();
 
 async function init() {
   const glyphs = loadGlyphs();
@@ -11,9 +14,11 @@ async function init() {
     tasks: [glyphs.catch(() => {})],
   });
   await playIntro(loaderEl, await glyphs);
+  masthead.drop();
 }
 
 init().catch((error) => {
   console.error(error);
   document.querySelector("[data-loader]")?.remove();
+  masthead.drop();
 });
