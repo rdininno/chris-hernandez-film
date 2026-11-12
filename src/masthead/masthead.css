@@ -32,7 +32,8 @@
   padding: 0;
   list-style: none;
   font-family: var(--font-serif);
-  font-weight: 600;
+  font-weight: 300;
+  font-style: italic;
   font-size: 30cqb;
   line-height: 1;
 }
