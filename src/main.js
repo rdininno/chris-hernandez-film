@@ -1,6 +1,7 @@
 import "./styles/base.css";
 import "@fontsource/anton";
 import { runLoader } from "./intro/loader.js";
+import { createCutout } from "./intro/cutout.js";
 
 async function init() {
   const loaderEl = await runLoader({
@@ -8,7 +9,9 @@ async function init() {
     steps: 5,
     fonts: ["400 1em Anton"],
   });
-  console.log("loader done", loaderEl);
+
+  createCutout(loaderEl);
+  loaderEl.classList.add("is-cutout");
 }
 
 init();

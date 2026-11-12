@@ -18,6 +18,23 @@
         <span class="leader__number" data-leader-number>8</span>
       </div>
       <span class="loader__count" data-loader-count>0</span>
+      <svg class="cutout" data-cutout aria-hidden="true">
+        <defs>
+          <mask id="name-mask">
+            <rect width="100%" height="100%" fill="white" />
+            <g data-cutout-name>
+              <text fill="black">CHRIS</text>
+              <text fill="black">HERNANDEZ</text>
+            </g>
+          </mask>
+        </defs>
+        <rect
+          class="cutout__fill"
+          width="100%"
+          height="100%"
+          mask="url(#name-mask)"
+        />
+      </svg>
     </div>
 
     <main id="app"></main>

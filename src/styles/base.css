@@ -35,3 +35,9 @@ svg {
   display: block;
   max-width: 100%;
 }
+
+/* Temporary: a backdrop to see through the cutout. Replaced in Step 5. */
+#app {
+  min-height: 100svh;
+  background: linear-gradient(160deg, #1b2b4a, #b8743f 60%, #f1d7a2);
+}

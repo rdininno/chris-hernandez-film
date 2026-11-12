@@ -56,3 +56,32 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
+
+.cutout {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+.cutout__fill {
+  fill: var(--color-bg);
+}
+
+.cutout text {
+  font-family: var(--font-display);
+}
+
+.loader.is-cutout {
+  background: transparent;
+}
+
+.loader.is-cutout .cutout {
+  visibility: visible;
+}
+
+.loader.is-cutout .leader,
+.loader.is-cutout .loader__count {
+  visibility: hidden;
+}
