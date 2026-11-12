@@ -1,8 +1,13 @@
 import { gsap } from "gsap";
-import { preloadImages } from "./preload.js";
+import { loadImage, loadFont, track } from "./preload.js";
 import "./loader.css";
 
-export function runLoader({ assets = [], minDuration = 2.4, steps = 8 } = {}) {
+export function runLoader({
+  images = [],
+  fonts = [],
+  minDuration = 2.4,
+  steps = 8,
+} = {}) {
   const el = document.querySelector("[data-loader]");
   const countEl = el.querySelector("[data-loader-count]");
   const sweepEl = el.querySelector("[data-leader-sweep]");
@@ -30,7 +35,8 @@ export function runLoader({ assets = [], minDuration = 2.4, steps = 8 } = {}) {
   };
 
   return new Promise((resolve) => {
-    preloadImages(assets, (p) => {
+    const tasks = [...images.map(loadImage), ...fonts.map(loadFont)];
+    track(tasks, (p) => {
       state.real = p;
     });
 
