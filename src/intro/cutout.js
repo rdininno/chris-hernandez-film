@@ -1,10 +1,30 @@
 const BASE = 100;
 
 function measure(font, text) {
-  const path = font.getPath(text, 0, 0, BASE);
-  const box = path.getBoundingBox();
+  const unit = BASE / font.unitsPerEm;
+  const glyphs = [...text].map((char) => font.charToGlyph(char));
+  const box = { x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity };
+
+  let x = 0;
+  let d = "";
+
+  glyphs.forEach((glyph, i) => {
+    const path = glyph.getPath(x, 0, BASE);
+    const b = path.getBoundingBox();
+
+    d += path.toPathData(2);
+    box.x1 = Math.min(box.x1, b.x1);
+    box.y1 = Math.min(box.y1, b.y1);
+    box.x2 = Math.max(box.x2, b.x2);
+    box.y2 = Math.max(box.y2, b.y2);
+
+    const next = glyphs[i + 1];
+    x += glyph.advanceWidth * unit;
+    if (next) x += font.getKerningValue(glyph, next) * unit;
+  });
+
   return {
-    d: path.toPathData(2),
+    d,
     left: box.x1,
     width: box.x2 - box.x1,
     cap: -box.y1,

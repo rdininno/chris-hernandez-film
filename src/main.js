@@ -13,4 +13,7 @@ async function init() {
   await playIntro(loaderEl, await glyphs);
 }
 
-init();
+init().catch((error) => {
+  console.error(error);
+  document.querySelector("[data-loader]")?.remove();
+});
