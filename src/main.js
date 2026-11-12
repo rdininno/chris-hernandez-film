@@ -1,17 +1,16 @@
 import "./styles/base.css";
 import "@fontsource/anton";
 import { runLoader } from "./intro/loader.js";
-import { createCutout } from "./intro/cutout.js";
+import { playIntro } from "./intro/intro.js";
+import { loadGlyphs } from "./intro/glyphs.js";
 
 async function init() {
+  const glyphs = loadGlyphs();
   const loaderEl = await runLoader({
-    minDuration: 4,
-    steps: 5,
     fonts: ["400 1em Anton"],
+    tasks: [glyphs.catch(() => {})],
   });
-
-  createCutout(loaderEl);
-  loaderEl.classList.add("is-cutout");
+  await playIntro(loaderEl, await glyphs);
 }
 
 init();

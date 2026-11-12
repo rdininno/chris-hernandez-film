@@ -1,24 +1,28 @@
 const BASE = 100;
-const ctx = document.createElement("canvas").getContext("2d");
 
-function measure(text, font) {
-  ctx.font = font;
-  const m = ctx.measureText(text);
+function measure(font, text) {
+  const path = font.getPath(text, 0, 0, BASE);
+  const box = path.getBoundingBox();
   return {
-    left: m.actualBoundingBoxLeft,
-    width: m.actualBoundingBoxLeft + m.actualBoundingBoxRight,
-    cap: m.actualBoundingBoxAscent,
+    d: path.toPathData(2),
+    left: box.x1,
+    width: box.x2 - box.x1,
+    cap: -box.y1,
   };
 }
 
-export function createCutout(root) {
+export function createCutout(root, font) {
   const svg = root.querySelector("[data-cutout]");
   const group = svg.querySelector("[data-cutout-name]");
-  const lines = [...group.querySelectorAll("text")];
+  const lines = [...group.querySelectorAll("path")];
 
-  const style = getComputedStyle(lines[0]);
-  const font = `${style.fontWeight} ${BASE}px ${style.fontFamily}`;
-  const metrics = lines.map((el) => measure(el.textContent, font));
+  const metrics = lines.map((el) => {
+    const m = measure(font, el.dataset.line);
+    el.setAttribute("d", m.d);
+    return m;
+  });
+
+  const center = { x: 0, y: 0 };
 
   function layout() {
     const { width: vw, height: vh } = svg.getBoundingClientRect();
@@ -37,14 +41,20 @@ export function createCutout(root) {
 
     lines.forEach((el, i) => {
       const s = scales[i] * fit;
-      el.setAttribute("font-size", BASE * s);
-      el.setAttribute("x", left + metrics[i].left * s);
-      el.setAttribute("y", baselines[i]);
+      const x = left - metrics[i].left * s;
+      el.setAttribute(
+        "transform",
+        `translate(${x} ${baselines[i]}) scale(${s})`,
+      );
     });
+
+    center.x = vw / 2;
+    center.y = vh / 2;
   }
 
   layout();
   window.addEventListener("resize", layout);
+  const destroy = () => window.removeEventListener("resize", layout);
 
-  return { svg, group, layout };
+  return { svg, group, center, layout, destroy };
 }

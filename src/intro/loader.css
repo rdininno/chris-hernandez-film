@@ -69,10 +69,6 @@
   fill: var(--color-bg);
 }
 
-.cutout text {
-  font-family: var(--font-display);
-}
-
 .loader.is-cutout {
   background: transparent;
 }

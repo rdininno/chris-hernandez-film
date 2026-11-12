@@ -5,8 +5,9 @@ import "./loader.css";
 export function runLoader({
   images = [],
   fonts = [],
-  minDuration = 2.4,
-  steps = 8,
+  tasks = [],
+  minDuration = 4,
+  steps = 5,
 } = {}) {
   const el = document.querySelector("[data-loader]");
   const countEl = el.querySelector("[data-loader-count]");
@@ -35,8 +36,8 @@ export function runLoader({
   };
 
   return new Promise((resolve) => {
-    const tasks = [...images.map(loadImage), ...fonts.map(loadFont)];
-    track(tasks, (p) => {
+    const all = [...images.map(loadImage), ...fonts.map(loadFont), ...tasks];
+    track(all, (p) => {
       state.real = p;
     });
 
