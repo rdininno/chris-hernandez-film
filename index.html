@@ -7,6 +7,16 @@
   </head>
   <body>
     <div class="loader" data-loader aria-hidden="true">
+      <div class="leader">
+        <div class="leader__sweep" data-leader-sweep></div>
+        <svg class="leader__lines" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="49" />
+          <circle cx="50" cy="50" r="40" />
+          <line x1="0" y1="50" x2="100" y2="50" />
+          <line x1="50" y1="0" x2="50" y2="100" />
+        </svg>
+        <span class="leader__number" data-leader-number>8</span>
+      </div>
       <span class="loader__count" data-loader-count>0</span>
     </div>
 
