@@ -1,6 +1,6 @@
 import "./styles/base.css";
-import "@fontsource/anton";
-import "@fontsource/cormorant-garamond/300-italic.css";
+import "@fontsource/italiana";
+import "@fontsource/work-sans/300.css";
 import { runLoader } from "./intro/loader.js";
 import { playIntro } from "./intro/intro.js";
 import { loadGlyphs } from "./intro/glyphs.js";
@@ -21,7 +21,7 @@ async function init() {
   const glyphs = loadGlyphs();
   const loaderEl = await runLoader({
     images: films.slice(0, 3).map((film) => film.image),
-    fonts: ["400 1em Anton", 'italic 300 1em "Cormorant Garamond"'],
+    fonts: ["400 1em Italiana", '300 1em "Work Sans"'],
     tasks: [glyphs.catch(() => {})],
   });
   await playIntro(loaderEl, await glyphs);

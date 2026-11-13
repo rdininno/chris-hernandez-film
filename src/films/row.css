@@ -1,11 +1,9 @@
 .films {
-  --card-height: min(60svh, 100vw);
-  --card-gap: max(3px, calc(var(--card-height) * 0.015));
-
   align-self: end;
   min-width: 0;
   overflow: hidden;
-  padding-top: var(--gutter);
+  position: relative;
+  z-index: 1;
   touch-action: none;
   user-select: none;
   cursor: grab;

@@ -1,22 +1,23 @@
 .films__titles {
   display: grid;
-  justify-self: end;
-  width: min(100%, 42ch);
+  width: min(calc(100% - var(--gutter) * 2), 15ch);
   overflow: hidden;
-  padding-inline: var(--gutter);
-  font-family: var(--font-serif);
-  font-style: italic;
+  position: absolute;
+  top: var(--gutter);
+  left: var(--gutter);
+  font-family: var(--font-sans);
   font-weight: 300;
-  font-size: clamp(1.75rem, 3.5vw, 3.5rem);
+  font-size: clamp(1.75rem, 3.7vw, 5rem);
   line-height: 1;
-  text-align: right;
+  text-align: left;
+  letter-spacing: -0.02em;
 }
 
 .film-title {
   grid-area: 1 / 1;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .film-title__text {

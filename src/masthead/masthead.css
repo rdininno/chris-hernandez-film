@@ -1,39 +1,27 @@
 .masthead {
-  padding: var(--gutter);
+  position: absolute;
+  left: var(--gutter);
+  bottom: calc(var(--card-height) * 0.74);
+  z-index: 0;
   display: grid;
-  grid-template-columns: 6fr 2fr;
-  column-gap: var(--gutter);
+  row-gap: 1.2vw;
 }
 
 .masthead__title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 6vw;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-box: trim-both cap alphabetic;
-}
-
-.masthead__roles {
-  container-type: size;
-}
-
-.roles {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0;
-  list-style: none;
+  grid-row: 2;
   font-family: var(--font-serif);
-  font-weight: 300;
-  font-style: italic;
-  font-size: 30cqb;
+  font-weight: 400;
+  font-size: 14vw;
   line-height: 1;
+  white-space: nowrap;
+  text-box: trim-both ex alphabetic;
 }
 
-.roles li {
+.masthead__bio {
+  grid-row: 1;
+  justify-self: end;
+  font-family: var(--font-serif);
+  font-size: max(0.875rem, 1.45vw);
+  line-height: 1;
   text-box: trim-both cap alphabetic;
 }

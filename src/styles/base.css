@@ -13,8 +13,8 @@
   --color-fg: #f2efe9;
   --color-leader-base: #161616;
   --color-leader-sweep: #2a2a2a;
-  --font-display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
-  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-serif: "Italiana", Didot, "Bodoni 72", Georgia, serif;
+  --font-sans: "Work Sans", "Helvetica Neue", Arial, sans-serif;
   --color-paper: #f2efe9;
   --color-ink: #0a0a0a;
   --gutter: max(10px, calc(clamp(16px, 2.5vw, 40px) / 3));
@@ -29,7 +29,7 @@ body {
   min-height: 100svh;
   background: var(--color-paper);
   color: var(--color-ink);
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -42,7 +42,11 @@ svg {
 }
 
 #app {
+  --card-height: min(60svh, 100vw);
+  --card-gap: max(3px, calc(var(--card-height) * 0.015));
+
+  position: relative;
   min-height: 100svh;
   display: grid;
-  grid-template-rows: auto 1fr;
+  align-content: end;
 }
