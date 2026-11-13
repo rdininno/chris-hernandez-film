@@ -19,8 +19,8 @@ function heightAt(distance) {
   return MIN_HEIGHT + (1 - MIN_HEIGHT) * curve;
 }
 
-export function createSlider({ root, track, cards }) {
-  const state = { target: 0, current: 0, speed: 0 };
+export function createSlider({ root, track, cards }, { onActive } = {}) {
+  const state = { target: 0, current: 0, speed: 0, active: -1 };
   const layout = {
     step: 0,
     loop: 0,
@@ -103,6 +103,9 @@ export function createSlider({ root, track, cards }) {
     const spread = 1 + amount * GAP_GROW * (layout.gap / layout.step);
     const zoom = REST_ZOOM - (REST_ZOOM - 1) * amount;
 
+    let nearest = 0;
+    let best = Infinity;
+
     cards.forEach((card, i) => {
       const home = i * layout.step;
       const x = layout.wrap(home - state.current);
@@ -111,10 +114,21 @@ export function createSlider({ root, track, cards }) {
       card.style.transform = `translateX(${middle - layout.half - layout.pad - home}px)`;
 
       const distance = Math.abs(middle - layout.center) / layout.center;
+
+      if (distance < best) {
+        best = distance;
+        nearest = i;
+      }
+
       const crop = (1 - heightAt(distance)) * 100;
       frames[i].style.clipPath = `inset(${crop}% 0 0 0)`;
       images[i].style.transform = `scale(${zoom})`;
     });
+
+    if (nearest !== state.active) {
+      state.active = nearest;
+      onActive?.(nearest);
+    }
   }
 
   function tick() {

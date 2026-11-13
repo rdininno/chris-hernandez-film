@@ -8,9 +8,14 @@ import "./masthead/masthead.css";
 import { films } from "./films/films.js";
 import { createFilmRow } from "./films/row.js";
 import { createSlider } from "./films/slider.js";
+import { createTitles } from "./films/titles.js";
 
 const row = createFilmRow(document.querySelector("[data-films]"), films);
-const slider = createSlider(row);
+const titles = createTitles(
+  document.querySelector("[data-film-titles]"),
+  films,
+);
+const slider = createSlider(row, { onActive: (index) => titles.show(index) });
 
 async function init() {
   const glyphs = loadGlyphs();
