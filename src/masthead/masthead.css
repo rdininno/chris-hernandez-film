@@ -5,18 +5,14 @@
   column-gap: var(--gutter);
 }
 
-.masthead__title svg {
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.masthead .glyph__body {
-  stroke: var(--color-ink);
-}
-
-.masthead .glyph__inline {
-  stroke: var(--color-paper);
+.masthead__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 6vw;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
 }
 
 .masthead__roles {
