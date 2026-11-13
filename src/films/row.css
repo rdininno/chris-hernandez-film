@@ -1,11 +1,11 @@
 .films {
   --card-height: min(60svh, 100vw);
-  --card-gap: clamp(16px, 2vw, 32px);
+  --card-gap: clamp(8px, 1vw, 16px);
 
   align-self: end;
   min-width: 0;
   overflow: hidden;
-  padding-block: var(--gutter);
+  padding-top: var(--gutter);
   touch-action: none;
   user-select: none;
   cursor: grab;
@@ -21,13 +21,13 @@
   width: max-content;
   padding: 0 var(--gutter);
   list-style: none;
-  will-change: transform;
 }
 
 .film-card {
   flex: none;
   height: var(--card-height);
   aspect-ratio: 4 / 5;
+  will-change: transform;
 }
 
 .film-card__frame {

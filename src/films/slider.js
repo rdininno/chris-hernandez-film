@@ -5,23 +5,35 @@ const DRAG = 1.2;
 const LOCK = 6;
 const LINE = 16;
 
-export function createSlider({ root, track }) {
-  const state = { target: 0, current: 0, max: 0 };
+export function createSlider({ root, track, cards }) {
+  const state = { target: 0, current: 0 };
+  const layout = { step: 0, loop: 0, wrap: (value) => value };
   let drag = null;
 
-  const clamp = (value) => gsap.utils.clamp(0, state.max, value);
-
   function measure() {
-    state.max = Math.max(0, track.offsetWidth - root.clientWidth);
-    state.target = clamp(state.target);
-  }
+    const style = getComputedStyle(track);
+    const gap = parseFloat(style.columnGap) || 0;
+    const pad = parseFloat(style.paddingLeft) || 0;
+    const previous = layout.loop;
 
+    layout.step = cards[0].offsetWidth + gap;
+    layout.loop = layout.step * cards.length;
+
+    const min = -(layout.step + pad);
+    layout.wrap = gsap.utils.wrap(min, min + layout.loop);
+
+    if (previous) {
+      const ratio = layout.loop / previous;
+      state.current *= ratio;
+      state.target *= ratio;
+    }
+  }
   function onWheel(e) {
     e.preventDefault();
     const unit =
       e.deltaMode === 1 ? LINE : e.deltaMode === 2 ? root.clientWidth : 1;
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    state.target = clamp(state.target + delta * unit);
+    state.target += delta * unit;
   }
 
   function onDown(e) {
@@ -48,7 +60,7 @@ export function createSlider({ root, track }) {
     }
 
     const delta = drag.axis === "x" ? dx : dy;
-    state.target = clamp(drag.start - delta * DRAG);
+    state.target = drag.start - delta * DRAG;
   }
 
   function onUp(e) {
@@ -62,7 +74,11 @@ export function createSlider({ root, track }) {
     state.current += (state.target - state.current) * ease;
     if (Math.abs(state.target - state.current) < 0.05)
       state.current = state.target;
-    track.style.transform = `translateX(${-state.current}px)`;
+    cards.forEach((card, i) => {
+      const home = i * layout.step;
+      const x = layout.wrap(home - state.current);
+      card.style.transform = `translateX(${x - home}px)`;
+    });
   }
 
   measure();
