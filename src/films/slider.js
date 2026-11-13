@@ -5,6 +5,11 @@ const DRAG = 1.2;
 const LOCK = 6;
 const LINE = 16;
 const MIN_HEIGHT = 0.7;
+const SETTLE = 0.08;
+const MAX_SPEED = 30;
+const REST_ZOOM = 1.12;
+const SPREAD = 0.05;
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function heightAt(distance) {
   const t = Math.min(distance, 1);
@@ -13,7 +18,7 @@ function heightAt(distance) {
 }
 
 export function createSlider({ root, track, cards }) {
-  const state = { target: 0, current: 0 };
+  const state = { target: 0, current: 0, speed: 0 };
   const layout = {
     step: 0,
     loop: 0,
@@ -23,6 +28,7 @@ export function createSlider({ root, track, cards }) {
     wrap: (value) => value,
   };
   const frames = cards.map((card) => card.querySelector(".film-card__frame"));
+  const images = cards.map((card) => card.querySelector(".film-card__image"));
   let drag = null;
 
   function measure() {
@@ -88,29 +94,37 @@ export function createSlider({ root, track, cards }) {
   }
 
   function render() {
+    const amount = calm ? 0 : Math.min(state.speed / MAX_SPEED, 1);
+    const spread = 1 + amount * SPREAD;
+    const zoom = REST_ZOOM - (REST_ZOOM - 1) * amount;
+
     cards.forEach((card, i) => {
       const home = i * layout.step;
       const x = layout.wrap(home - state.current);
-      card.style.transform = `translateX(${x - home}px)`;
+      const middle =
+        layout.center + (layout.pad + x + layout.half - layout.center) * spread;
+      card.style.transform = `translateX(${middle - layout.half - layout.pad - home}px)`;
 
-      const middle = layout.pad + x + layout.half;
       const distance = Math.abs(middle - layout.center) / layout.center;
       const crop = (1 - heightAt(distance)) * 100;
       frames[i].style.clipPath = `inset(${crop}% 0 0 0)`;
+      images[i].style.transform = `scale(${zoom})`;
     });
   }
 
   function tick() {
-    const ease = 1 - Math.pow(1 - EASE, gsap.ticker.deltaRatio());
-    state.current += (state.target - state.current) * ease;
+    const ratio = gsap.ticker.deltaRatio();
+    const previous = state.current;
+
+    state.current +=
+      (state.target - state.current) * (1 - Math.pow(1 - EASE, ratio));
     if (Math.abs(state.target - state.current) < 0.05)
       state.current = state.target;
-    cards.forEach((card, i) => {
-      const home = i * layout.step;
-      const x = layout.wrap(home - state.current);
-      card.style.transform = `translateX(${x - home}px)`;
-      render();
-    });
+
+    const velocity = Math.abs(state.current - previous) / ratio;
+    state.speed += (velocity - state.speed) * (1 - Math.pow(1 - SETTLE, ratio));
+
+    render();
   }
 
   measure();
