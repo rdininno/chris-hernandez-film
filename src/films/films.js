@@ -110,7 +110,7 @@ export const films = [
   },
   {
     slug: "i-shouldnt-have-gone-out-tonight",
-    title: "i shouldn't have gone out tonight",
+    title: "I Shouldn't Have Gone Out Tonight",
     year: 2026,
     runtime: "2:46",
     logline:
