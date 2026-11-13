@@ -39,3 +39,9 @@ svg {
   display: block;
   max-width: 100%;
 }
+
+#app {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}

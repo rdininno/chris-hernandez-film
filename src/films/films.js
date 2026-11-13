@@ -1,0 +1,127 @@
+export const films = [
+  {
+    slug: "slap",
+    title: "Slap",
+    year: 2024,
+    runtime: "0:28",
+    logline: "A surprise visit from a stranger is not what it seems.",
+    image: "/films/slap.jpeg",
+    youtubeId: null,
+    cast: [
+      { name: "Derrick Guerin", part: "Lil Man" },
+      { name: "Chris Hernandez", part: "Slapped Man" },
+    ],
+    crew: [{ job: "Camera & Editing", name: "Derrick Guerin" }],
+    byline: "Written and Directed by Chris Hernandez",
+  },
+  {
+    slug: "round-plastic-things",
+    title: "Round Plastic Things That Go Over Your Eyes",
+    year: 2024,
+    runtime: "1:12",
+    logline: "This product sells itself.",
+    image: "/films/round-plastic-things.jpeg",
+    youtubeId: null,
+    cast: [{ name: "Chris Hernandez" }],
+    crew: [
+      { job: "Editing & Graphics", name: "Derrick Guerin" },
+      { job: "Music", name: "Kings Of Yam (Jay Hammer & Marcos Moreno)" },
+    ],
+    byline: "Written and Directed by Chris Hernandez",
+  },
+  {
+    slug: "it-is-what-it-is",
+    title: "It Is What It Is",
+    year: 2024,
+    runtime: "3:21",
+    logline:
+      "A new stoner tries to rally an experienced weed head only to reveal his true colors when faced with the repercussions of his actions.",
+    image: "/films/it-is-what-it-is.jpeg",
+    youtubeId: null,
+    cast: [
+      { name: "Cory Calabasas" },
+      { name: "Chris Hernandez" },
+      { name: "Derrick Guerin" },
+    ],
+    crew: [
+      { job: "Camera", name: "Derrick Guerin" },
+      { job: "Music", name: "Ian Davies" },
+      { job: "Sound", name: "Jay Hammer" },
+    ],
+    byline: "Edited, Written, and Directed by Chris Hernandez",
+  },
+  {
+    slug: "whats-in-the-hand",
+    title: "What's In The Hand?",
+    year: 2024,
+    runtime: "3:37",
+    logline:
+      "A man is followed through a park by a mischievous stranger who holds his discarded property. But is it really his? And what is it?",
+    image: "/films/whats-in-the-hand.jpeg",
+    youtubeId: null,
+    cast: [{ name: "James McAndrew" }, { name: "Daniel Thornton" }],
+    crew: [
+      { job: "Camera", name: "Derrick Guerin, Chris Hernandez" },
+      { job: "Music", name: "Thomas Dininno, Chris Hernandez" },
+    ],
+    byline: "Edited, Written, Directed by Chris Hernandez",
+  },
+  {
+    slug: "intruder",
+    title: "Intruder",
+    year: 2026,
+    runtime: "7:59",
+    logline:
+      "Returning home, a man finds an intruder living in his house that claims to be the rightful tenant. A bizarre series of events follow that leads him to question his own reality and if he ever really lived there at all.",
+    image: "/films/intruder.jpeg",
+    youtubeId: null,
+    cast: [
+      { name: "James McAndrew", part: "Tenant" },
+      { name: "Jordan King", part: "Intruder" },
+      { name: "Derrick Guerin", part: "Landlord" },
+      { name: "Philippe Nick", part: "Friend" },
+      { name: "Natalie McKenzie", part: "Girlfriend" },
+    ],
+    crew: [
+      { job: "Camera, Lighting, Sound", name: "Chris Hernandez" },
+      { job: "Original Score", name: "James Player" },
+    ],
+    byline: "Written, Edited, Directed by Chris Hernandez",
+  },
+  {
+    slug: "marketplace-be-like",
+    title: "Marketplace Be Like, Is That For Sale Too?",
+    year: 2026,
+    runtime: "1:21",
+    logline:
+      "A man meets a bike seller from Marketplace to find that he has a person tied up and held hostage in his garage.",
+    image: "/films/marketplace-be-like.jpeg",
+    youtubeId: null,
+    cast: [
+      { name: "Jordan King", part: "Buyer" },
+      { name: "Robert Dininno", part: "Seller" },
+      { name: "Calum McConnell", part: "Hostage" },
+    ],
+    crew: [
+      { job: "Camera", name: "Chris Hernandez" },
+      { job: "Boom Operator", name: "Kohl Fast" },
+    ],
+    byline: "Written, Edited, and Directed by Chris Hernandez",
+  },
+  {
+    slug: "i-shouldnt-have-gone-out-tonight",
+    title: "i shouldn't have gone out tonight",
+    year: 2026,
+    runtime: "2:46",
+    logline:
+      "A man goes out to meet an old acquaintance and ends up committing a horrific crime.",
+    image: "/films/i-shouldnt-have-gone-out-tonight.jpeg",
+    youtubeId: null,
+    cast: [{ name: "Derrick Guerin" }, { name: "Chris Hernandez" }],
+    crew: [
+      { job: "Camera", name: "Derrick Guerin" },
+      { job: "Camera, Original Music", name: "Chris Hernandez" },
+    ],
+    byline: "Written, Edited, and Directed by Chris Hernandez",
+  },
+];
