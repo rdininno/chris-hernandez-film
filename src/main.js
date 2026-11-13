@@ -9,19 +9,29 @@ import { films } from "./films/films.js";
 import { createFilmRow } from "./films/row.js";
 import { createSlider } from "./films/slider.js";
 import { createTitles } from "./films/titles.js";
+import { createCredits } from "./films/credits.js";
 
 const row = createFilmRow(document.querySelector("[data-films]"), films);
 const titles = createTitles(
   document.querySelector("[data-film-titles]"),
   films,
 );
-const slider = createSlider(row, { onActive: (index) => titles.show(index) });
+const credits = createCredits(
+  document.querySelector("[data-film-credits]"),
+  films,
+);
+const slider = createSlider(row, {
+  onActive: (index) => {
+    titles.show(index);
+    credits.show(index);
+  },
+});
 
 async function init() {
   const glyphs = loadGlyphs();
   const loaderEl = await runLoader({
     images: films.slice(0, 3).map((film) => film.image),
-    fonts: ["400 1em Italiana", '300 1em "Work Sans"'],
+    fonts: ["400 1em Italiana", '300 1em "Work Sans"', '400 1em "Space Mono"'],
     tasks: [glyphs.catch(() => {})],
   });
   await playIntro(loaderEl, await glyphs);

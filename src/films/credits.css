@@ -1,0 +1,32 @@
+.credits {
+  position: absolute;
+  top: var(--gutter);
+  right: var(--gutter);
+  width: 30vw;
+  display: grid;
+}
+
+.credits__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 2vw;
+  align-items: baseline;
+  padding-block: 0.5vw;
+  border-top: 1px solid color-mix(in srgb, currentColor 70%, transparent);
+}
+
+.credits dt {
+  font-family: var(--font-mono);
+  font-size: clamp(0.625rem, 0.72vw, 0.875rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.credits dd {
+  font-weight: 300;
+  font-size: clamp(0.8125rem, 1.1vw, 1.25rem);
+  line-height: 1.25;
+  max-width: 30ch;
+  text-align: right;
+  text-wrap: balance;
+}

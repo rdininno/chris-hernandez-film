@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import "./titles.css";
+import { loopDirection } from "./direction.js";
 
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -13,7 +14,16 @@ export function createTitles(root, films) {
     text.className = "film-title__text";
     text.textContent = film.title;
 
-    item.append(text);
+    const logline = document.createElement("p");
+    logline.className = "film-title__logline";
+    logline.textContent = film.logline;
+
+    const inner = document.createElement("div");
+    inner.className = "film-title__inner";
+    inner.append(text, logline);
+
+    item.append(inner);
+
     return item;
   });
 
@@ -55,13 +65,7 @@ export function createTitles(root, films) {
     const outgoing = items[previous];
     outgoing.setAttribute("aria-hidden", "true");
 
-    const n = items.length;
-    let diff = (index - previous) % n;
-
-    if (diff > n / 2) diff -= n;
-    if (diff < -n / 2) diff += n;
-
-    const dir = diff > 0 ? 1 : -1;
+    const dir = loopDirection(previous, index, items.length);
 
     const duration = calm ? 0 : 0.7;
     const ease = "power3.out";

@@ -15,6 +15,7 @@
   --color-leader-sweep: #2a2a2a;
   --font-serif: "Italiana", Didot, "Bodoni 72", Georgia, serif;
   --font-sans: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, Menlo, monospace;
   --color-paper: #f2efe9;
   --color-ink: #0a0a0a;
   --gutter: max(10px, calc(clamp(16px, 2.5vw, 40px) / 3));

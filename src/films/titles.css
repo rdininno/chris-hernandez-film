@@ -1,6 +1,6 @@
 .films__titles {
   display: grid;
-  width: min(calc(100% - var(--gutter) * 2), 15ch);
+  width: min(calc(100% - var(--gutter) * 2), 22ch);
   overflow: hidden;
   position: absolute;
   top: var(--gutter);
@@ -22,4 +22,18 @@
 
 .film-title__text {
   padding-block: 0.15em;
+  text-wrap: balance;
+}
+
+.film-title__inner {
+  display: grid;
+  gap: 1vw;
+}
+
+.film-title__logline {
+  max-width: 52ch;
+  font-size: clamp(0.8125rem, 1.1vw, 1.25rem);
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-wrap: pretty;
 }
