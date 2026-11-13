@@ -1,6 +1,6 @@
 .films {
   --card-height: min(60svh, 100vw);
-  --card-gap: clamp(8px, 1vw, 16px);
+  --card-gap: max(3px, calc(var(--card-height) * 0.015));
 
   align-self: end;
   min-width: 0;

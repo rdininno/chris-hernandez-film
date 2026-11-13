@@ -4,11 +4,13 @@ const EASE = 0.1;
 const DRAG = 1.2;
 const LOCK = 6;
 const LINE = 16;
+const WHEEL = 0.5;
+const MAX_WHEEL = 60;
 const MIN_HEIGHT = 0.7;
 const SETTLE = 0.08;
 const MAX_SPEED = 30;
 const REST_ZOOM = 1.12;
-const SPREAD = 0.05;
+const GAP_GROW = 1;
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function heightAt(distance) {
@@ -23,6 +25,7 @@ export function createSlider({ root, track, cards }) {
     step: 0,
     loop: 0,
     pad: 0,
+    gap: 0,
     half: 0,
     center: 0,
     wrap: (value) => value,
@@ -40,6 +43,7 @@ export function createSlider({ root, track, cards }) {
     layout.step = cards[0].offsetWidth + gap;
     layout.loop = layout.step * cards.length;
     layout.pad = pad;
+    layout.gap = gap;
     layout.half = cards[0].offsetWidth / 2;
     layout.center = root.clientWidth / 2;
 
@@ -57,7 +61,8 @@ export function createSlider({ root, track, cards }) {
     const unit =
       e.deltaMode === 1 ? LINE : e.deltaMode === 2 ? root.clientWidth : 1;
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    state.target += delta * unit;
+    state.target +=
+      gsap.utils.clamp(-MAX_WHEEL, MAX_WHEEL, delta * unit) * WHEEL;
   }
 
   function onDown(e) {
@@ -95,7 +100,7 @@ export function createSlider({ root, track, cards }) {
 
   function render() {
     const amount = calm ? 0 : Math.min(state.speed / MAX_SPEED, 1);
-    const spread = 1 + amount * SPREAD;
+    const spread = 1 + amount * GAP_GROW * (layout.gap / layout.step);
     const zoom = REST_ZOOM - (REST_ZOOM - 1) * amount;
 
     cards.forEach((card, i) => {
