@@ -27,5 +27,5 @@ export function createFilmRow(root, films) {
   track.append(...cards);
   root.append(track);
 
-  return { track, cards };
+  return { root, track, cards };
 }

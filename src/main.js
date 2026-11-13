@@ -7,8 +7,10 @@ import { loadGlyphs } from "./intro/glyphs.js";
 import "./masthead/masthead.css";
 import { films } from "./films/films.js";
 import { createFilmRow } from "./films/row.js";
+import { createSlider } from "./films/slider.js";
 
-createFilmRow(document.querySelector("[data-films]"), films);
+const row = createFilmRow(document.querySelector("[data-films]"), films);
+const slider = createSlider(row);
 
 async function init() {
   const glyphs = loadGlyphs();
@@ -18,9 +20,11 @@ async function init() {
     tasks: [glyphs.catch(() => {})],
   });
   await playIntro(loaderEl, await glyphs);
+  slider.start();
 }
 
 init().catch((error) => {
   console.error(error);
   document.querySelector("[data-loader]")?.remove();
+  slider.start();
 });
