@@ -25,3 +25,12 @@
   line-height: 1;
   text-box: trim-both cap alphabetic;
 }
+
+.masthead__horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+}

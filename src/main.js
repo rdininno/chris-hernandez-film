@@ -10,6 +10,7 @@ import { createFilmRow } from "./films/row.js";
 import { createSlider } from "./films/slider.js";
 import { createTitles } from "./films/titles.js";
 import { createCredits } from "./films/credits.js";
+import { createEntrance } from "./entrance.js";
 
 const row = createFilmRow(document.querySelector("[data-films]"), films);
 const titles = createTitles(
@@ -26,6 +27,7 @@ const slider = createSlider(row, {
     credits.show(index);
   },
 });
+const entrance = createEntrance({ slider });
 
 async function init() {
   const glyphs = loadGlyphs();
@@ -35,11 +37,13 @@ async function init() {
     tasks: [glyphs.catch(() => {})],
   });
   await playIntro(loaderEl, await glyphs);
+  await entrance.play();
   slider.start();
 }
 
 init().catch((error) => {
   console.error(error);
   document.querySelector("[data-loader]")?.remove();
+  entrance.skip();
   slider.start();
 });

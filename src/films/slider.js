@@ -19,8 +19,10 @@ function heightAt(distance) {
   return MIN_HEIGHT + (1 - MIN_HEIGHT) * curve;
 }
 
+const riseEase = gsap.parseEase("back.out(1.4)");
+
 export function createSlider({ root, track, cards }, { onActive } = {}) {
-  const state = { target: 0, current: 0, speed: 0, active: -1 };
+  const state = { target: 0, current: 0, speed: 0, active: -1, reveal: 1 };
   const layout = {
     step: 0,
     loop: 0,
@@ -120,9 +122,14 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
         nearest = i;
       }
 
-      const crop = (1 - heightAt(distance)) * 100;
+      const local = gsap.utils.clamp(
+        0,
+        1,
+        (state.reveal - Math.min(distance, 1) * 0.5) / 0.5,
+      );
+      const crop = (1 - heightAt(distance) * riseEase(local)) * 100;
       frames[i].style.clipPath = `inset(${crop}% 0 0 0)`;
-      images[i].style.transform = `scale(${zoom})`;
+      images[i].style.transform = `scale(${zoom + (1 - local) * 0.35})`;
     });
 
     if (nearest !== state.active) {
@@ -156,6 +163,7 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
   });
 
   return {
+    render,
     state,
     start() {
       window.addEventListener("wheel", onWheel, { passive: false });
