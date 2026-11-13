@@ -9,7 +9,7 @@ function measure(font, text) {
   let d = "";
 
   glyphs.forEach((glyph, i) => {
-    const path = glyph.getPath(x, 0, BASE);
+    const path = glyph.getPath(Math.round(x * 100) / 100, 0, BASE);
     const b = path.getBoundingBox();
 
     d += path.toPathData(2);
