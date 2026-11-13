@@ -29,6 +29,7 @@
   height: var(--card-height);
   aspect-ratio: 4 / 5;
   will-change: transform;
+  transform-origin: 0 100%;
 }
 
 .film-card__frame {

@@ -8,9 +8,14 @@ const NBSP = "\u00a0";
 
 function keepTogether(name) {
   return name
-    .split(" (")
-    .map((part) => part.replaceAll(" ", NBSP))
-    .join(" (");
+    .split(", ")
+    .map((person) =>
+      person
+        .split(" (")
+        .map((part) => part.replaceAll(" ", NBSP))
+        .join(" ("),
+    )
+    .join(", ");
 }
 
 function rowsFor(film) {
@@ -22,7 +27,7 @@ function rowsFor(film) {
     [
       "Crew",
       film.crew
-        .map((member) => `${keepTogether(member.name)} (${member.job})`)
+        .map((member) => `${keepTogether(member.name)}${NBSP}(${member.job})`)
         .join(", "),
     ],
   ];

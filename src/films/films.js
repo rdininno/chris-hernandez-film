@@ -6,7 +6,7 @@ export const films = [
     runtime: "0:28",
     logline: "A surprise visit from a stranger is not what it seems.",
     image: "/films/slap.jpeg",
-    youtubeId: null,
+    youtubeId: "4i0XEguh6j0",
     cast: [
       { name: "Derrick Guerin", part: "Lil Man" },
       { name: "Chris Hernandez", part: "Slapped Man" },
@@ -21,7 +21,7 @@ export const films = [
     runtime: "1:12",
     logline: "This product sells itself.",
     image: "/films/round-plastic-things.jpeg",
-    youtubeId: null,
+    youtubeId: "0ZxvT3SR-Us",
     cast: [{ name: "Chris Hernandez" }],
     crew: [
       { job: "Editing & Graphics", name: "Derrick Guerin" },
@@ -37,7 +37,7 @@ export const films = [
     logline:
       "A new stoner tries to rally an experienced weed head only to reveal his true colors when faced with the repercussions of his actions.",
     image: "/films/it-is-what-it-is.jpeg",
-    youtubeId: null,
+    youtubeId: "YlPzF23fwn0",
     cast: [
       { name: "Cory Calabasas" },
       { name: "Chris Hernandez" },
@@ -58,7 +58,7 @@ export const films = [
     logline:
       "A man is followed through a park by a mischievous stranger who holds his discarded property. But is it really his? And what is it?",
     image: "/films/whats-in-the-hand.jpeg",
-    youtubeId: null,
+    youtubeId: "8ETL_OFvUHA",
     cast: [{ name: "James McAndrew" }, { name: "Daniel Thornton" }],
     crew: [
       { job: "Camera", name: "Derrick Guerin, Chris Hernandez" },
@@ -74,7 +74,7 @@ export const films = [
     logline:
       "Returning home, a man finds an intruder living in his house that claims to be the rightful tenant. A bizarre series of events follow that leads him to question his own reality and if he ever really lived there at all.",
     image: "/films/intruder.jpeg",
-    youtubeId: null,
+    youtubeId: "NshZqfma8l4",
     cast: [
       { name: "James McAndrew", part: "Tenant" },
       { name: "Jordan King", part: "Intruder" },
@@ -96,7 +96,7 @@ export const films = [
     logline:
       "A man meets a bike seller from Marketplace to find that he has a person tied up and held hostage in his garage.",
     image: "/films/marketplace-be-like.jpeg",
-    youtubeId: null,
+    youtubeId: "GfFErnAa7JI",
     cast: [
       { name: "Jordan King", part: "Buyer" },
       { name: "Robert Dininno", part: "Seller" },
@@ -116,7 +116,7 @@ export const films = [
     logline:
       "A man goes out to meet an old acquaintance and ends up committing a horrific crime.",
     image: "/films/i-shouldnt-have-gone-out-tonight.jpeg",
-    youtubeId: null,
+    youtubeId: "bkmlvaW67Hw",
     cast: [{ name: "Derrick Guerin" }, { name: "Chris Hernandez" }],
     crew: [
       { job: "Camera", name: "Derrick Guerin" },

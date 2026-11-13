@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { loopOffset } from "./direction.js";
 
 const EASE = 0.1;
 const DRAG = 1.2;
@@ -11,6 +12,9 @@ const SETTLE = 0.08;
 const MAX_SPEED = 30;
 const REST_ZOOM = 1.12;
 const GAP_GROW = 1;
+const PLAYER_WIDTH = 0.6;
+const PLAYER_CENTER = 0.6;
+const SLIVER = 0.012;
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function heightAt(distance) {
@@ -21,8 +25,20 @@ function heightAt(distance) {
 
 const riseEase = gsap.parseEase("back.out(1.4)");
 
-export function createSlider({ root, track, cards }, { onActive } = {}) {
-  const state = { target: 0, current: 0, speed: 0, active: -1, reveal: 1 };
+export function createSlider(
+  { root, track, cards },
+  { onActive, onOpen } = {},
+) {
+  const state = {
+    target: 0,
+    current: 0,
+    speed: 0,
+    active: -1,
+    reveal: 1,
+    open: 0,
+    selected: -1,
+    locked: false,
+  };
   const layout = {
     step: 0,
     loop: 0,
@@ -57,9 +73,26 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
       state.current *= ratio;
       state.target *= ratio;
     }
+
+    const vw = root.clientWidth;
+    const vh = window.innerHeight;
+    const playerW = Math.min(vw * PLAYER_WIDTH, vh * 0.56 * (16 / 9));
+    const playerH = playerW * (9 / 16);
+
+    layout.player = {
+      x: (vw - playerW) / 2,
+      y: vh * PLAYER_CENTER - playerH / 2,
+      w: playerW,
+      h: playerH,
+    };
+    layout.vw = vw;
+    layout.sliver = vw * SLIVER;
   }
+
   function onWheel(e) {
     e.preventDefault();
+    if (state.locked) return;
+
     const unit =
       e.deltaMode === 1 ? LINE : e.deltaMode === 2 ? root.clientWidth : 1;
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
@@ -68,13 +101,16 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
   }
 
   function onDown(e) {
+    if (state.locked) return;
     if (e.button !== 0) return;
+
     drag = {
       id: e.pointerId,
       x: e.clientX,
       y: e.clientY,
       start: state.target,
       axis: null,
+      card: e.target.closest(".film-card"),
     };
     root.setPointerCapture(e.pointerId);
   }
@@ -96,39 +132,75 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
 
   function onUp(e) {
     if (!drag || e.pointerId !== drag.id) return;
+    const tapped = drag.axis ? null : drag.card;
     drag = null;
     root.classList.remove("is-dragging");
+    if (tapped) select(cards.indexOf(tapped));
+  }
+
+  function select(i) {
+    if (i === state.active) {
+      onOpen?.(i);
+      return;
+    }
+    const home = i * layout.step;
+    const x = layout.wrap(home - state.current);
+    state.target =
+      state.current + (layout.pad + x + layout.half - layout.center);
   }
 
   function render() {
     const amount = calm ? 0 : Math.min(state.speed / MAX_SPEED, 1);
     const spread = 1 + amount * GAP_GROW * (layout.gap / layout.step);
     const zoom = REST_ZOOM - (REST_ZOOM - 1) * amount;
+    const { open } = state;
+    const count = cards.length;
+
+    const middles = cards.map((card, i) => {
+      const x = layout.wrap(i * layout.step - state.current);
+      return (
+        layout.center + (layout.pad + x + layout.half - layout.center) * spread
+      );
+    });
 
     let nearest = 0;
     let best = Infinity;
 
     cards.forEach((card, i) => {
       const home = i * layout.step;
-      const x = layout.wrap(home - state.current);
-      const middle =
-        layout.center + (layout.pad + x + layout.half - layout.center) * spread;
-      card.style.transform = `translateX(${middle - layout.half - layout.pad - home}px)`;
+      let middle = middles[i];
+      const rowDistance = Math.abs(middle - layout.center) / layout.center;
 
-      const distance = Math.abs(middle - layout.center) / layout.center;
-
-      if (distance < best) {
-        best = distance;
+      if (rowDistance < best) {
+        best = rowDistance;
         nearest = i;
       }
 
+      const k = open > 0 ? loopOffset(state.selected, i, count) : null;
+      let alpha = 1;
+
+      if (k === 0) alpha = 1 - open;
+      if (k === 1 || k === -1) {
+        const outer = middles[(state.selected + 2 * k + count) % count];
+        middle = gsap.utils.interpolate(
+          middle,
+          outer + k * layout.sliver,
+          open,
+        );
+      }
+
+      const distance = Math.abs(middle - layout.center) / layout.center;
       const local = gsap.utils.clamp(
         0,
         1,
         (state.reveal - Math.min(distance, 1) * 0.5) / 0.5,
       );
-      const crop = (1 - heightAt(distance) * riseEase(local)) * 100;
-      frames[i].style.clipPath = `inset(${crop}% 0 0 0)`;
+      const crop = 1 - heightAt(distance) * riseEase(local);
+
+      card.style.transform = `translateX(${middle - layout.half - layout.pad - home}px)`;
+      card.style.opacity = alpha;
+      card.style.zIndex = k === 1 || k === -1 ? "1" : "";
+      frames[i].style.clipPath = `inset(${crop * 100}% 0 0 0)`;
       images[i].style.transform = `scale(${zoom + (1 - local) * 0.35})`;
     });
 
@@ -173,6 +245,10 @@ export function createSlider({ root, track, cards }, { onActive } = {}) {
       root.addEventListener("pointercancel", onUp);
       root.addEventListener("dragstart", (e) => e.preventDefault());
       gsap.ticker.add(tick);
+    },
+    lock(value) {
+      state.locked = value;
+      if (value) state.target = state.current;
     },
   };
 }

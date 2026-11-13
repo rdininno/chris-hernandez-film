@@ -11,6 +11,7 @@ import { createSlider } from "./films/slider.js";
 import { createTitles } from "./films/titles.js";
 import { createCredits } from "./films/credits.js";
 import { createEntrance } from "./entrance.js";
+import { createStage } from "./films/stage.js";
 
 const row = createFilmRow(document.querySelector("[data-films]"), films);
 const titles = createTitles(
@@ -26,7 +27,9 @@ const slider = createSlider(row, {
     titles.show(index);
     credits.show(index);
   },
+  onOpen: (index) => stage.open(index),
 });
+const stage = createStage({ slider });
 const entrance = createEntrance({ slider });
 
 async function init() {

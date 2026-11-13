@@ -1,0 +1,52 @@
+.lights {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  background: var(--color-ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+#app.is-staged .lights {
+  opacity: 0.7;
+  pointer-events: auto;
+}
+
+.films__titles,
+.credits {
+  z-index: 3;
+  transition: color 0.6s ease;
+}
+
+#app.is-staged .films__titles,
+#app.is-staged .credits {
+  color: var(--color-paper);
+}
+
+.stage-close {
+  position: absolute;
+  top: var(--gutter);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 4;
+  padding: 0.6em 0.8em;
+  border: 0;
+  background: none;
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: clamp(0.625rem, 0.72vw, 0.875rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s;
+}
+
+#app.is-staged .stage-close {
+  opacity: 1;
+  visibility: visible;
+}
