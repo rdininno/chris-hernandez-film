@@ -38,7 +38,14 @@ export function createStage({ slider, films }) {
 
   function loadVideo(film) {
     const iframe = document.createElement("iframe");
-    iframe.src = `https://www.youtube-nocookie.com/embed/${film.youtubeId}?autoplay=1&rel=0&playsinline=1`;
+    const params = new URLSearchParams({
+      autoplay: 1,
+      controls: 1,
+      rel: 0,
+      playsinline: 1,
+      iv_load_policy: 3,
+    });
+    iframe.src = `https://www.youtube-nocookie.com/embed/${film.youtubeId}?${params}`;
     iframe.title = film.title;
     iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
     iframe.allowFullscreen = true;

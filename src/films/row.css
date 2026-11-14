@@ -43,3 +43,11 @@
   object-fit: cover;
   will-change: transform;
 }
+
+.film-card.is-active {
+  cursor: pointer;
+}
+
+.films.is-dragging .film-card {
+  cursor: grabbing;
+}

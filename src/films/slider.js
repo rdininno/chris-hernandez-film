@@ -141,14 +141,12 @@ export function createSlider(
   }
 
   function select(i) {
-    if (i === state.active) {
-      onOpen?.(i);
-      return;
-    }
+    if (i !== state.active) return;
     const home = i * layout.step;
     const x = layout.wrap(home - state.current);
     state.target =
       state.current + (layout.pad + x + layout.half - layout.center);
+    onOpen?.(i);
   }
 
   function render() {
@@ -210,6 +208,8 @@ export function createSlider(
     });
 
     if (nearest !== state.active) {
+      cards[state.active]?.classList.remove("is-active");
+      cards[nearest].classList.add("is-active");
       state.active = nearest;
       onActive?.(nearest);
     }
@@ -253,7 +253,6 @@ export function createSlider(
     },
     lock(value) {
       state.locked = value;
-      if (value) state.target = state.current;
     },
     layout,
     cardRect(i) {
