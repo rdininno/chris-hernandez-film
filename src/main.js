@@ -29,7 +29,7 @@ const slider = createSlider(row, {
   },
   onOpen: (index) => stage.open(index),
 });
-const stage = createStage({ slider });
+const stage = createStage({ slider, films });
 const entrance = createEntrance({ slider });
 
 async function init() {

@@ -50,3 +50,29 @@
   opacity: 1;
   visibility: visible;
 }
+
+.screen {
+  position: fixed;
+  z-index: 3;
+  overflow: hidden;
+  background: var(--color-ink);
+  visibility: hidden;
+}
+
+.screen__still,
+.screen__player,
+.screen__player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.screen__still {
+  z-index: 1;
+  object-fit: cover;
+}
+
+.screen__player iframe {
+  border: 0;
+}

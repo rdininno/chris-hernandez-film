@@ -50,6 +50,8 @@ export function createSlider(
   };
   const frames = cards.map((card) => card.querySelector(".film-card__frame"));
   const images = cards.map((card) => card.querySelector(".film-card__image"));
+  const crops = [];
+  const scales = [];
   let drag = null;
 
   function measure() {
@@ -179,7 +181,7 @@ export function createSlider(
       const k = open > 0 ? loopOffset(state.selected, i, count) : null;
       let alpha = 1;
 
-      if (k === 0) alpha = 1 - open;
+      if (k === 0) alpha = 0;
       if (k === 1 || k === -1) {
         const outer = middles[(state.selected + 2 * k + count) % count];
         middle = gsap.utils.interpolate(
@@ -201,7 +203,10 @@ export function createSlider(
       card.style.opacity = alpha;
       card.style.zIndex = k === 1 || k === -1 ? "1" : "";
       frames[i].style.clipPath = `inset(${crop * 100}% 0 0 0)`;
-      images[i].style.transform = `scale(${zoom + (1 - local) * 0.35})`;
+      const scale = zoom + (1 - local) * 0.35;
+      images[i].style.transform = `scale(${scale})`;
+      crops[i] = crop;
+      scales[i] = scale;
     });
 
     if (nearest !== state.active) {
@@ -249,6 +254,18 @@ export function createSlider(
     lock(value) {
       state.locked = value;
       if (value) state.target = state.current;
+    },
+    layout,
+    cardRect(i) {
+      const box = frames[i].getBoundingClientRect();
+      return {
+        x: box.left,
+        y: box.top,
+        w: box.width,
+        h: box.height,
+        crop: crops[i],
+        scale: scales[i],
+      };
     },
   };
 }
